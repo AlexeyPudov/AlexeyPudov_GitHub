@@ -16,13 +16,14 @@ def random_predict(number:int=1)->int:
         
     while True:
         count += 1
-        predict_number = int((min_number + max_number)/2) # предполагаемое число: среднее
-                
+        # Вводим редполагаемое число: берём среднее между двумя числами
+        predict_number = int((min_number + max_number)/2)
+        # Отсекаем часть чисел сверху
         if predict_number > number:
-            max_number = predict_number # отсекаем часть чисел сверху
-            
+            max_number = predict_number
+        # Отсекаем часть чисел снизу
         elif predict_number < number:
-            min_number = predict_number # отсекаем часть чисел снизу
+            min_number = predict_number
             
         else:
             break
@@ -39,14 +40,18 @@ def score_game(random_predict) -> int:
         int: среднее за 1000 экспериментов число попыток
     """
     
-    count_ls = [] # создаём список для сохранения количества попыток по каждому эксперименту
-    np.random.seed(1) # фиксируем сид для воспроизводимости
-    random_array = np.random.randint(1, 101, size=1000) # создаём список из 1000 чисел
+    # Создаём список для сохранения количества попыток по каждому эксперименту
+    count_ls = []
+    # Фиксируем сид для воспроизводимости
+    np.random.seed(1)
+    # Создаём список из 1000 случайных чисел
+    random_array = np.random.randint(1, 101, size=1000)
     
     for number in random_array:
         count_ls.append(random_predict(number))
-        
-    score = int(np.mean(count_ls)) # считаем среднее количество попыток
-    
+     
+    # Считаем среднее количество попыток
+    score = int(np.mean(count_ls))
     print(f'Your algorithm guesses number in an average of {score} attempts')
+    
     return score
